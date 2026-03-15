@@ -1,0 +1,18 @@
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Kubernetes / Talos
+homelab/talos/kubeconfig
+homelab/talos/talosconfig
+homelab/talos/talosctl-*
+homelab/talos/*.yaml
+
+# Generic
+*.log
+
+# External Repositories
+.agents/homeassistant/codebase/core
+.agents/homeassistant/codebase/hass-cli
+ha-config/

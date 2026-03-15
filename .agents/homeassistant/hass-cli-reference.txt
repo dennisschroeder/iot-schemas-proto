@@ -1,0 +1,301 @@
+--- FULL CLI REFERENCE ---
+=== COMMAND: state ===
+Usage: hass-cli state [OPTIONS] COMMAND [ARGS]...
+
+  Get info on entity state from Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  delete    Delete entity state from Home Assistant.
+  edit      Edit entity state from Home Assistant.
+  get       Get/read entity state from Home Assistant.
+  history   Get state history from Home Assistant, all or per entity.
+  list      List all state from Home Assistant.
+  toggle    Toggle state for one or more entities in Home Assistant.
+  turn_off  Turn entity off.
+  turn_on   Turn entity on.
+--- SUBCOMMAND: state delete ---
+Usage: hass-cli state delete [OPTIONS] ENTITY
+
+  Delete entity state from Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: state edit ---
+Usage: hass-cli state edit [OPTIONS] ENTITY [NEWSTATE]
+
+  Edit entity state from Home Assistant.
+
+Options:
+  --attributes TEXT  Comma separated key/value pairs to use as attributes.
+  --json TEXT        Raw JSON state to use for setting. Overrides any
+                     otherstate values provided.
+  --merge            If set and the entity state exists the state and
+                     attributes willbe merged into the state rather than
+                     overwrite.
+  --help             Show this message and exit.
+--- SUBCOMMAND: state get ---
+Usage: hass-cli state get [OPTIONS] ENTITY
+
+  Get/read entity state from Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: state history ---
+Usage: hass-cli state history [OPTIONS] ENTITIES...
+
+  Get state history from Home Assistant, all or per entity.
+
+  You can use `--since` and `--end` to narrow or expand the time period.
+
+  Both options accepts a full timestamp i.e. `2016-02-06T22:15:00+00:00` or a
+  relative expression i.e. `3m` for three minutes, `5d` for 5 days. Even `3
+  minutes` or `5 days` will work. See
+  https://dateparser.readthedocs.io/en/latest/#features for examples.
+
+Options:
+  --since TEXT  Start of the period to get history from. A timestamp or
+                relative expression relative to now. Defaults to 1 day.
+  --end TEXT    End of the period to query history from. A timestamp or
+                relative expression relative to now. Defaults to now.
+  --help        Show this message and exit.
+--- SUBCOMMAND: state list ---
+Usage: hass-cli state list [OPTIONS] [ENTITYFILTER]
+
+  List all state from Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: state toggle ---
+Usage: hass-cli state toggle [OPTIONS] ENTITIES...
+
+  Toggle state for one or more entities in Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: state turn_off ---
+Usage: hass-cli state turn_off [OPTIONS] ENTITIES...
+
+  Turn entity off.
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: state turn_on ---
+Usage: hass-cli state turn_on [OPTIONS] ENTITIES...
+
+  Turn entity on.
+
+Options:
+  --help  Show this message and exit.
+=== COMMAND: service ===
+Usage: hass-cli service [OPTIONS] COMMAND [ARGS]...
+
+  Call and work with services.
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  call  Call a service.
+  list  Get list of services.
+--- SUBCOMMAND: service call ---
+Usage: hass-cli service call [OPTIONS] SERVICE
+
+  Call a service.
+
+Options:
+  --arguments TEXT  Comma separated key/value pairs to use as arguments.
+  --help            Show this message and exit.
+--- SUBCOMMAND: service list ---
+Usage: hass-cli service list [OPTIONS] [SERVICEFILTER]
+
+  Get list of services.
+
+Options:
+  --help  Show this message and exit.
+=== COMMAND: area ===
+Usage: hass-cli area [OPTIONS] COMMAND [ARGS]...
+
+  Get info and operate on areas from Home Assistant (EXPERIMENTAL).
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  create  Create an area.
+  delete  Delete an area.
+  list    List all areas from Home Assistant.
+  rename  Rename an area.
+--- SUBCOMMAND: area create ---
+Usage: hass-cli area create [OPTIONS] NAMES...
+
+  Create an area.
+
+  NAMES - one or more area names to create
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: area delete ---
+Usage: hass-cli area delete [OPTIONS] NAMES...
+
+  Delete an area.
+
+  NAMES - one or more area names or id to delete
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: area list ---
+Usage: hass-cli area list [OPTIONS] [AREAFILTER]
+
+  List all areas from Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: area rename ---
+Usage: hass-cli area rename [OPTIONS] OLDNAME NEWNAME
+
+  Rename an area.
+
+Options:
+  --help  Show this message and exit.
+=== COMMAND: entity ===
+Usage: hass-cli entity [OPTIONS] COMMAND [ARGS]...
+
+  Get info on entities from Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  assign  Update area on one or more entities.
+  list    List all entities from Home Assistant.
+  rename  Rename a entity.
+--- SUBCOMMAND: entity assign ---
+Usage: hass-cli entity assign [OPTIONS] AREA_ID_OR_NAME [NAMES]...
+
+  Update area on one or more entities.
+
+  NAMES - one or more name or id (Optional)
+
+Options:
+  --match TEXT  Expression used to find entities matching that name
+  --help        Show this message and exit.
+--- SUBCOMMAND: entity list ---
+Usage: hass-cli entity list [OPTIONS] [ENTITYFILTER]
+
+  List all entities from Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: entity rename ---
+Usage: hass-cli entity rename [OPTIONS] OLDID [NEWID]
+
+  Rename a entity.
+
+Options:
+  --name TEXT
+  --help       Show this message and exit.
+=== COMMAND: device ===
+Usage: hass-cli device [OPTIONS] COMMAND [ARGS]...
+
+  Get info and operate on devices from Home Assistant (EXPERIMENTAL).
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  assign  Update area on one or more devices.
+  list    List all devices from Home Assistant.
+  rename  Update name of specified device.
+--- SUBCOMMAND: device assign ---
+Usage: hass-cli device assign [OPTIONS] AREA_ID_OR_NAME [NAMES]...
+
+  Update area on one or more devices.
+
+  NAMES - one or more name or id (Optional)
+
+Options:
+  --match TEXT  Expression used to find devices matching that name
+  --help        Show this message and exit.
+--- SUBCOMMAND: device list ---
+Usage: hass-cli device list [OPTIONS] [DEVICEFILTER]
+
+  List all devices from Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: device rename ---
+Usage: hass-cli device rename [OPTIONS] DEVICE_ID_OR_NAME NEW_NAME
+
+  Update name of specified device.
+
+Options:
+  --help  Show this message and exit.
+=== COMMAND: config ===
+Usage: hass-cli config [OPTIONS] COMMAND [ARGS]...
+
+  Get configuration from a Home Assistant instance.
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  components      Get loaded components from Home Assistant.
+  full            Get full details on the configuration from Home Assistant.
+  release         Get the release of Home Assistant.
+  whitelist-dirs  Get the whitelisted directories from Home Assistant.
+--- SUBCOMMAND: config components ---
+Usage: hass-cli config components [OPTIONS]
+
+  Get loaded components from Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: config full ---
+Usage: hass-cli config full [OPTIONS]
+
+  Get full details on the configuration from Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: config release ---
+Usage: hass-cli config release [OPTIONS]
+
+  Get the release of Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: config whitelist-dirs ---
+Usage: hass-cli config whitelist-dirs [OPTIONS]
+
+  Get the whitelisted directories from Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+=== COMMAND: system ===
+Usage: hass-cli system [OPTIONS] COMMAND [ARGS]...
+
+  System details and operations for Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  health  Get system health from Home Assistant.
+  log     Get errors from Home Assistant.
+--- SUBCOMMAND: system health ---
+Usage: hass-cli system health [OPTIONS]
+
+  Get system health from Home Assistant.
+
+Options:
+  --help  Show this message and exit.
+--- SUBCOMMAND: system log ---
+Usage: hass-cli system log [OPTIONS]
+
+  Get errors from Home Assistant.
+
+Options:
+  --help  Show this message and exit.

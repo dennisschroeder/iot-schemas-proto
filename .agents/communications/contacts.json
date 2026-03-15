@@ -1,0 +1,82 @@
+{
+  "kontakte": [
+    {
+      "name": "Alice Schröder",
+      "verhältnis": "Ehefrau",
+      "ha_notify_services": ["mobile_app_iphone_alice"],
+      "priorität": [
+        {
+          "dienst": "iCloud",
+          "id": "491717796680",
+          "typ": "mobil"
+        },
+        {
+          "dienst": "WhatsApp",
+          "id": "491717796680@s.whatsapp.net",
+          "typ": "mobil"
+        }
+      ]
+    },
+    {
+      "name": "Papa",
+      "verhältnis": "Vater",
+      "ha_notify_services": [],
+      "priorität": [
+        {
+          "dienst": "WhatsApp",
+          "id": "491755923217@s.whatsapp.net",
+          "typ": "mobil"
+        },
+        {
+          "dienst": "iCloud",
+          "id": "491755923217",
+          "typ": "mobil"
+        }
+      ]
+    },
+    {
+      "name": "Ben Schröder",
+      "verhältnis": "Sohn",
+      "ha_notify_services": [
+        "mobile_app_ben_s_handy_14",
+        "mobile_app_bens_ipad"
+      ],
+      "priorität": [
+        {
+          "dienst": "iCloud",
+          "id": "49111222333",
+          "typ": "mobil"
+        }
+      ]
+    },
+    {
+      "name": "Isabel Schröder",
+      "verhältnis": "Tochter",
+      "ha_notify_services": ["mobile_app_iphone_von_isabel"],
+      "priorität": [
+        {
+          "dienst": "iCloud",
+          "id": "4915258576934",
+          "typ": "mobil"
+        },
+        {
+          "dienst": "WhatsApp",
+          "id": "4915258576934@s.whatsapp.net",
+          "typ": "mobil"
+        }
+      ]
+    },
+    {
+      "name": "Mutter",
+      "verhältnis": "Mutter",
+      "ha_notify_services": [],
+      "priorität": [
+        {
+          "dienst": "WhatsApp",
+          "id": "4915112304952@s.whatsapp.net",
+          "typ": "mobil"
+        }
+      ]
+    }
+  ]
+}
