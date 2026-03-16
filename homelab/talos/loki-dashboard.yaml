@@ -60,7 +60,7 @@ data:
                 "uid": "Loki"
               },
               "editorMode": "builder",
-              "expr": "{app=~\"$app\"} |= `$search`",
+              "expr": "{app=~\"^$app$\"}",
               "queryType": "range",
               "refId": "A"
             }
@@ -86,7 +86,7 @@ data:
             },
             "definition": "label_values(app)",
             "hide": 0,
-            "includeAll": true,
+            "includeAll": false,
             "multi": false,
             "name": "app",
             "options": [],
