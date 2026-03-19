@@ -35,6 +35,8 @@ ENTRYPOINT ["/service"]
 
 ### 3. CI/CD (GitHub Actions & GHCR)
 - Jedes Projekt bekommt ein eigenes Git-Repository (z.B. `homelab-app-<name>`), getrennt vom GitOps-Infrastruktur-Repo.
+- **Vier-Augen-Prinzip (Pull Requests)**: Es wird **niemals** direkt auf den `main`-Branch gepusht. Alle Änderungen (Features, Bugfixes, Doku) erfolgen über dedizierte Branches (`feature/x`, `fix/y`). 
+- Sobald ein Branch fertig ist, wird ein Pull Request erstellt (z.B. via `gh pr create`), um dem User die Möglichkeit zur Review zu geben. 
 - Erstelle eine `.github/workflows/docker.yml`, die bei einem Push auf `main` den Code baut und das Image in die GitHub Container Registry (`ghcr.io`) pusht.
 
 ### 4. Kubernetes GitOps Deployment (FluxCD)
