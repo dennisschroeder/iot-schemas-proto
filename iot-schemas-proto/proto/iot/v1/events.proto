@@ -4,7 +4,7 @@ package iot.v1;
 
 option go_package = "github.com/dennisschroeder/iot-schemas-proto/gen/go/iot/v1";
 
-import "google/protobuf/timestamp.go";
+import "google/protobuf/timestamp.proto";
 
 // Generic Sensor Event (MQTT -> NATS Mirror)
 message SensorEvent {
