@@ -35,6 +35,8 @@ spec:
           value: "Europe/Berlin"
         - name: ZIGBEE2MQTT_CONFIG_SERIAL_PORT
           value: "/dev/ttyACM0"
+        - name: ZIGBEE2MQTT_CONFIG_MQTT_SERVER
+          value: "mqtt://mosquitto.mqtt:1883"
         volumeMounts:
         - name: data
           mountPath: /app/data
@@ -85,6 +87,12 @@ spec:
         env:
         - name: TZ
           value: "Europe/Berlin"
+        - name: MQTT_HOST
+          value: "mosquitto.mqtt"
+        - name: MQTT_PORT
+          value: "1883"
+        - name: MQTT_PREFIX
+          value: "zwave"
         volumeMounts:
         - name: data
           mountPath: /usr/src/app/store
