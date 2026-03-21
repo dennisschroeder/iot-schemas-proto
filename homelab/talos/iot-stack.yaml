@@ -97,14 +97,14 @@ spec:
         - name: data
           mountPath: /usr/src/app/store
         - name: dev
-          mountPath: /dev/ttyACM1 # Pfad zum Z-Wave Stick auf dem Pi (kann variieren)
+          mountPath: /dev/ttyAMA0 # Pfad zum Z-Wave HAT (GPIO UART)
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: zwave-data
       - name: dev
         hostPath:
-          path: /dev/ttyACM1
+          path: /dev/ttyAMA0
 ---
 apiVersion: v1
 kind: Service
