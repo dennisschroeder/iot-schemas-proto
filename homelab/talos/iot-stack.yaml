@@ -4,7 +4,7 @@ metadata:
   name: zigbee2mqtt
   namespace: iot
 spec:
-  replicas: 0 # Bleibt auf 0, bis der Raspberry Pi mit den USB-Sticks da ist
+  replicas: 1 # Bleibt auf 0, bis der Raspberry Pi mit den USB-Sticks da ist
   strategy:
     type: Recreate
   selector:
@@ -37,14 +37,14 @@ spec:
         - name: data
           mountPath: /app/data
         - name: dev
-          mountPath: /dev/ttyACM0 # Pfad zum USB-Stick auf dem Pi (kann variieren)
+          mountPath: /dev/zigbee # Pfad zum USB-Stick auf dem Pi (kann variieren)
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: zigbee2mqtt-data
       - name: dev
         hostPath:
-          path: /dev/ttyACM0
+          path: /dev/zigbee
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -52,7 +52,7 @@ metadata:
   name: zwave-js-ui
   namespace: iot
 spec:
-  replicas: 0 # Bleibt auf 0, bis der Raspberry Pi mit den USB-Sticks da ist
+  replicas: 1 # Bleibt auf 0, bis der Raspberry Pi mit den USB-Sticks da ist
   strategy:
     type: Recreate
   selector:
@@ -87,14 +87,14 @@ spec:
         - name: data
           mountPath: /usr/src/app/store
         - name: dev
-          mountPath: /dev/ttyACM1 # Pfad zum Z-Wave Stick auf dem Pi (kann variieren)
+          mountPath: /dev/zwave # Pfad zum Z-Wave Stick auf dem Pi (kann variieren)
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: zwave-data
       - name: dev
         hostPath:
-          path: /dev/ttyACM1
+          path: /dev/zwave
 ---
 apiVersion: v1
 kind: Service
