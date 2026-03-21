@@ -111,8 +111,6 @@ kind: Service
 metadata:
   name: zigbee2mqtt
   namespace: iot
-  annotations:
-    external-mdns.blakecovarrubias.com/hostnames: zigbee
 spec:
   type: LoadBalancer
   ports:
@@ -128,8 +126,6 @@ kind: Service
 metadata:
   name: zwave-js-ui
   namespace: iot
-  annotations:
-    external-mdns.blakecovarrubias.com/hostnames: zwave
 spec:
   type: LoadBalancer
   ports:
@@ -144,42 +140,44 @@ spec:
   selector:
     app: zwave-js-ui
 ---
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: zigbee2mqtt-route
+  name: zigbee2mqtt-ingress
   namespace: iot
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    external-mdns.blakecovarrubias.com/hostnames: zigbee
 spec:
-  parentRefs:
-  - name: traefik-gateway
-    namespace: traefik
-  hostnames:
-  - "zigbee.local"
   rules:
-  - matches:
-    - path:
-        type: PathPrefix
-        value: "/"
-    backendRefs:
-    - name: zigbee2mqtt
-      port: 8080
+  - host: zigbee.local
+    http:
+      paths:
+      - backend:
+          service:
+            name: zigbee2mqtt
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
 ---
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: zwave-js-ui-route
+  name: zwave-js-ui-ingress
   namespace: iot
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    external-mdns.blakecovarrubias.com/hostnames: zwave
 spec:
-  parentRefs:
-  - name: traefik-gateway
-    namespace: traefik
-  hostnames:
-  - "zwave.local"
   rules:
-  - matches:
-    - path:
-        type: PathPrefix
-        value: "/"
-    backendRefs:
-    - name: zwave-js-ui
-      port: 8091
+  - host: zwave.local
+    http:
+      paths:
+      - backend:
+          service:
+            name: zwave-js-ui
+            port:
+              number: 8091
+        path: /
+        pathType: Prefix
