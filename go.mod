@@ -1,5 +1,5 @@
 module github.com/dennisschroeder/iot-schemas-proto
 
-go 1.24.0
+go 1.24
 
 require google.golang.org/protobuf v1.36.11
