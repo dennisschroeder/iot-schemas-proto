@@ -1,6 +1,6 @@
 module github.com/dennisschroeder/iot-schemas-proto
 
-go 1.26.1
+go 1.24
 
 require (
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.6.1 // indirect
