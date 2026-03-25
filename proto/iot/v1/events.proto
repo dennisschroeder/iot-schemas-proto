@@ -22,6 +22,8 @@ message EventEnvelope {
   oneof payload {
     PresenceEvent presence = 5;
     LightEvent light = 6;
+    SensorEvent sensor = 7;
+    RawEvent raw = 8;
   }
 }
 
@@ -47,6 +49,12 @@ message SensorEvent {
   double numeric_value = 5;
   string unit = 6;
   google.protobuf.Timestamp timestamp = 7;
+}
+
+// Raw Event for unmapped telemetry
+message RawEvent {
+  string entity_id = 1;
+  string payload = 2;
 }
 
 // Action Request (NATS -> Gateway -> MQTT)
