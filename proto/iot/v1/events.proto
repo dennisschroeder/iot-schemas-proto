@@ -38,6 +38,14 @@ message LightEvent {
   string entity_id = 1;
   BinaryState state = 2;
   float brightness = 3;       // 0.0 - 1.0
+  int32 color_temp = 4;       // in Mireds
+  ColorXY color = 5;
+  string color_mode = 6;
+}
+
+message ColorXY {
+  float x = 1;
+  float y = 2;
 }
 
 // Generic Sensor Event (Legacy/Fallback)
