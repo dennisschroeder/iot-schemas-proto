@@ -23,7 +23,6 @@ message EventEnvelope {
     PresenceEvent presence = 5;
     LightEvent light = 6;
     SensorEvent sensor = 7;
-    RawEvent raw = 8;
   }
 }
 
@@ -38,6 +37,14 @@ message LightEvent {
   string entity_id = 1;
   BinaryState state = 2;
   float brightness = 3;       // 0.0 - 1.0
+  optional int32 color_temp = 4;       // in Mireds
+  ColorXY color = 5;
+  optional string color_mode = 6;
+}
+
+message ColorXY {
+  float x = 1;
+  float y = 2;
 }
 
 // Generic Sensor Event (Legacy/Fallback)
@@ -49,12 +56,6 @@ message SensorEvent {
   double numeric_value = 5;
   string unit = 6;
   google.protobuf.Timestamp timestamp = 7;
-}
-
-// Raw Event for unmapped telemetry
-message RawEvent {
-  string entity_id = 1;
-  string payload = 2;
 }
 
 // Action Request (NATS -> Gateway -> MQTT)
