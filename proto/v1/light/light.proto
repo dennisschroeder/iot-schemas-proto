@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package iot.v1.light;
+
+import "proto/v1/common/common.proto";
+
+option go_package = "github.com/dennisschroeder/iot-schemas-proto/proto/v1/light";
+
+// Domain: Light
+message LightEvent {
+  string entity_id = 1;
+  iot.v1.common.BinaryState state = 2;
+  float brightness = 3;       // 0.0 - 1.0
+  optional int32 color_temp = 4;       // in Mireds
+  iot.v1.common.ColorXY color = 5;
+  optional string color_mode = 6;
+}
+
+message LightCommand {
+  iot.v1.common.BinaryState state = 1;
+  float brightness = 2;
+}
