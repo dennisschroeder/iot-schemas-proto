@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package iot.v1.action;
+
+import "proto/v1/light/light.proto";
+
+option go_package = "github.com/dennisschroeder/iot-schemas-proto/proto/v1/action";
+
+// Action Request (NATS -> Gateway -> MQTT)
+message ActionRequest {
+  string id = 1;
+  string target_entity = 2;   // e.g., "light.of_desk_sublight"
+  oneof command {
+    iot.v1.light.LightCommand light = 3;
+  }
+}

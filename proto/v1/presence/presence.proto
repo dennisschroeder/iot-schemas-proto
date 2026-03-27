@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package iot.v1.presence;
+
+import "proto/v1/common/common.proto";
+
+option go_package = "github.com/dennisschroeder/iot-schemas-proto/proto/v1/presence";
+
+// Domain: Presence (PIR/Motion)
+message PresenceEvent {
+  string entity_id = 1;
+  iot.v1.common.BinaryState state = 2;
+}
