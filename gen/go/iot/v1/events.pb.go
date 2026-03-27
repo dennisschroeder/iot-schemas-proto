@@ -84,7 +84,6 @@ type EventEnvelope struct {
 	//	*EventEnvelope_Presence
 	//	*EventEnvelope_Light
 	//	*EventEnvelope_Sensor
-	//	*EventEnvelope_Raw
 	Payload       isEventEnvelope_Payload `protobuf_oneof:"payload"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -182,15 +181,6 @@ func (x *EventEnvelope) GetSensor() *SensorEvent {
 	return nil
 }
 
-func (x *EventEnvelope) GetRaw() *RawEvent {
-	if x != nil {
-		if x, ok := x.Payload.(*EventEnvelope_Raw); ok {
-			return x.Raw
-		}
-	}
-	return nil
-}
-
 type isEventEnvelope_Payload interface {
 	isEventEnvelope_Payload()
 }
@@ -207,17 +197,11 @@ type EventEnvelope_Sensor struct {
 	Sensor *SensorEvent `protobuf:"bytes,7,opt,name=sensor,proto3,oneof"`
 }
 
-type EventEnvelope_Raw struct {
-	Raw *RawEvent `protobuf:"bytes,8,opt,name=raw,proto3,oneof"`
-}
-
 func (*EventEnvelope_Presence) isEventEnvelope_Payload() {}
 
 func (*EventEnvelope_Light) isEventEnvelope_Payload() {}
 
 func (*EventEnvelope_Sensor) isEventEnvelope_Payload() {}
-
-func (*EventEnvelope_Raw) isEventEnvelope_Payload() {}
 
 // Domain: Presence (PIR/Motion)
 type PresenceEvent struct {
@@ -277,7 +261,10 @@ type LightEvent struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	EntityId      string                 `protobuf:"bytes,1,opt,name=entity_id,json=entityId,proto3" json:"entity_id,omitempty"`
 	State         BinaryState            `protobuf:"varint,2,opt,name=state,proto3,enum=iot.v1.BinaryState" json:"state,omitempty"`
-	Brightness    float32                `protobuf:"fixed32,3,opt,name=brightness,proto3" json:"brightness,omitempty"` // 0.0 - 1.0
+	Brightness    float32                `protobuf:"fixed32,3,opt,name=brightness,proto3" json:"brightness,omitempty"`                     // 0.0 - 1.0
+	ColorTemp     *int32                 `protobuf:"varint,4,opt,name=color_temp,json=colorTemp,proto3,oneof" json:"color_temp,omitempty"` // in Mireds
+	Color         *ColorXY               `protobuf:"bytes,5,opt,name=color,proto3" json:"color,omitempty"`
+	ColorMode     *string                `protobuf:"bytes,6,opt,name=color_mode,json=colorMode,proto3,oneof" json:"color_mode,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -333,6 +320,79 @@ func (x *LightEvent) GetBrightness() float32 {
 	return 0
 }
 
+func (x *LightEvent) GetColorTemp() int32 {
+	if x != nil && x.ColorTemp != nil {
+		return *x.ColorTemp
+	}
+	return 0
+}
+
+func (x *LightEvent) GetColor() *ColorXY {
+	if x != nil {
+		return x.Color
+	}
+	return nil
+}
+
+func (x *LightEvent) GetColorMode() string {
+	if x != nil && x.ColorMode != nil {
+		return *x.ColorMode
+	}
+	return ""
+}
+
+type ColorXY struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	X             float32                `protobuf:"fixed32,1,opt,name=x,proto3" json:"x,omitempty"`
+	Y             float32                `protobuf:"fixed32,2,opt,name=y,proto3" json:"y,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ColorXY) Reset() {
+	*x = ColorXY{}
+	mi := &file_iot_v1_events_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ColorXY) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ColorXY) ProtoMessage() {}
+
+func (x *ColorXY) ProtoReflect() protoreflect.Message {
+	mi := &file_iot_v1_events_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ColorXY.ProtoReflect.Descriptor instead.
+func (*ColorXY) Descriptor() ([]byte, []int) {
+	return file_iot_v1_events_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ColorXY) GetX() float32 {
+	if x != nil {
+		return x.X
+	}
+	return 0
+}
+
+func (x *ColorXY) GetY() float32 {
+	if x != nil {
+		return x.Y
+	}
+	return 0
+}
+
 // Generic Sensor Event (Legacy/Fallback)
 type SensorEvent struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -349,7 +409,7 @@ type SensorEvent struct {
 
 func (x *SensorEvent) Reset() {
 	*x = SensorEvent{}
-	mi := &file_iot_v1_events_proto_msgTypes[3]
+	mi := &file_iot_v1_events_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -361,7 +421,7 @@ func (x *SensorEvent) String() string {
 func (*SensorEvent) ProtoMessage() {}
 
 func (x *SensorEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_iot_v1_events_proto_msgTypes[3]
+	mi := &file_iot_v1_events_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -374,7 +434,7 @@ func (x *SensorEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SensorEvent.ProtoReflect.Descriptor instead.
 func (*SensorEvent) Descriptor() ([]byte, []int) {
-	return file_iot_v1_events_proto_rawDescGZIP(), []int{3}
+	return file_iot_v1_events_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *SensorEvent) GetId() string {
@@ -424,59 +484,6 @@ func (x *SensorEvent) GetTimestamp() *timestamppb.Timestamp {
 		return x.Timestamp
 	}
 	return nil
-}
-
-// Raw Event for unmapped telemetry
-type RawEvent struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	EntityId      string                 `protobuf:"bytes,1,opt,name=entity_id,json=entityId,proto3" json:"entity_id,omitempty"`
-	Payload       string                 `protobuf:"bytes,2,opt,name=payload,proto3" json:"payload,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RawEvent) Reset() {
-	*x = RawEvent{}
-	mi := &file_iot_v1_events_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RawEvent) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RawEvent) ProtoMessage() {}
-
-func (x *RawEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_iot_v1_events_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RawEvent.ProtoReflect.Descriptor instead.
-func (*RawEvent) Descriptor() ([]byte, []int) {
-	return file_iot_v1_events_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *RawEvent) GetEntityId() string {
-	if x != nil {
-		return x.EntityId
-	}
-	return ""
-}
-
-func (x *RawEvent) GetPayload() string {
-	if x != nil {
-		return x.Payload
-	}
-	return ""
 }
 
 // Action Request (NATS -> Gateway -> MQTT)
@@ -618,7 +625,7 @@ var File_iot_v1_events_proto protoreflect.FileDescriptor
 
 const file_iot_v1_events_proto_rawDesc = "" +
 	"\n" +
-	"\x13iot/v1/events.proto\x12\x06iot.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc8\x02\n" +
+	"\x13iot/v1/events.proto\x12\x06iot.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa2\x02\n" +
 	"\rEventEnvelope\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
 	"\x06source\x18\x02 \x01(\tR\x06source\x12\x14\n" +
@@ -626,19 +633,28 @@ const file_iot_v1_events_proto_rawDesc = "" +
 	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x123\n" +
 	"\bpresence\x18\x05 \x01(\v2\x15.iot.v1.PresenceEventH\x00R\bpresence\x12*\n" +
 	"\x05light\x18\x06 \x01(\v2\x12.iot.v1.LightEventH\x00R\x05light\x12-\n" +
-	"\x06sensor\x18\a \x01(\v2\x13.iot.v1.SensorEventH\x00R\x06sensor\x12$\n" +
-	"\x03raw\x18\b \x01(\v2\x10.iot.v1.RawEventH\x00R\x03rawB\t\n" +
+	"\x06sensor\x18\a \x01(\v2\x13.iot.v1.SensorEventH\x00R\x06sensorB\t\n" +
 	"\apayload\"W\n" +
 	"\rPresenceEvent\x12\x1b\n" +
 	"\tentity_id\x18\x01 \x01(\tR\bentityId\x12)\n" +
-	"\x05state\x18\x02 \x01(\x0e2\x13.iot.v1.BinaryStateR\x05state\"t\n" +
+	"\x05state\x18\x02 \x01(\x0e2\x13.iot.v1.BinaryStateR\x05state\"\x81\x02\n" +
 	"\n" +
 	"LightEvent\x12\x1b\n" +
 	"\tentity_id\x18\x01 \x01(\tR\bentityId\x12)\n" +
 	"\x05state\x18\x02 \x01(\x0e2\x13.iot.v1.BinaryStateR\x05state\x12\x1e\n" +
 	"\n" +
 	"brightness\x18\x03 \x01(\x02R\n" +
-	"brightness\"\xdb\x01\n" +
+	"brightness\x12\"\n" +
+	"\n" +
+	"color_temp\x18\x04 \x01(\x05H\x00R\tcolorTemp\x88\x01\x01\x12%\n" +
+	"\x05color\x18\x05 \x01(\v2\x0f.iot.v1.ColorXYR\x05color\x12\"\n" +
+	"\n" +
+	"color_mode\x18\x06 \x01(\tH\x01R\tcolorMode\x88\x01\x01B\r\n" +
+	"\v_color_tempB\r\n" +
+	"\v_color_mode\"%\n" +
+	"\aColorXY\x12\f\n" +
+	"\x01x\x18\x01 \x01(\x02R\x01x\x12\f\n" +
+	"\x01y\x18\x02 \x01(\x02R\x01y\"\xdb\x01\n" +
 	"\vSensorEvent\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
 	"\x06source\x18\x02 \x01(\tR\x06source\x12\x1b\n" +
@@ -646,10 +662,7 @@ const file_iot_v1_events_proto_rawDesc = "" +
 	"\x05value\x18\x04 \x01(\tR\x05value\x12#\n" +
 	"\rnumeric_value\x18\x05 \x01(\x01R\fnumericValue\x12\x12\n" +
 	"\x04unit\x18\x06 \x01(\tR\x04unit\x128\n" +
-	"\ttimestamp\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"A\n" +
-	"\bRawEvent\x12\x1b\n" +
-	"\tentity_id\x18\x01 \x01(\tR\bentityId\x12\x18\n" +
-	"\apayload\x18\x02 \x01(\tR\apayload\"}\n" +
+	"\ttimestamp\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"}\n" +
 	"\rActionRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12#\n" +
 	"\rtarget_entity\x18\x02 \x01(\tR\ftargetEntity\x12,\n" +
@@ -684,8 +697,8 @@ var file_iot_v1_events_proto_goTypes = []any{
 	(*EventEnvelope)(nil),         // 1: iot.v1.EventEnvelope
 	(*PresenceEvent)(nil),         // 2: iot.v1.PresenceEvent
 	(*LightEvent)(nil),            // 3: iot.v1.LightEvent
-	(*SensorEvent)(nil),           // 4: iot.v1.SensorEvent
-	(*RawEvent)(nil),              // 5: iot.v1.RawEvent
+	(*ColorXY)(nil),               // 4: iot.v1.ColorXY
+	(*SensorEvent)(nil),           // 5: iot.v1.SensorEvent
 	(*ActionRequest)(nil),         // 6: iot.v1.ActionRequest
 	(*LightCommand)(nil),          // 7: iot.v1.LightCommand
 	(*timestamppb.Timestamp)(nil), // 8: google.protobuf.Timestamp
@@ -694,10 +707,10 @@ var file_iot_v1_events_proto_depIdxs = []int32{
 	8,  // 0: iot.v1.EventEnvelope.timestamp:type_name -> google.protobuf.Timestamp
 	2,  // 1: iot.v1.EventEnvelope.presence:type_name -> iot.v1.PresenceEvent
 	3,  // 2: iot.v1.EventEnvelope.light:type_name -> iot.v1.LightEvent
-	4,  // 3: iot.v1.EventEnvelope.sensor:type_name -> iot.v1.SensorEvent
-	5,  // 4: iot.v1.EventEnvelope.raw:type_name -> iot.v1.RawEvent
-	0,  // 5: iot.v1.PresenceEvent.state:type_name -> iot.v1.BinaryState
-	0,  // 6: iot.v1.LightEvent.state:type_name -> iot.v1.BinaryState
+	5,  // 3: iot.v1.EventEnvelope.sensor:type_name -> iot.v1.SensorEvent
+	0,  // 4: iot.v1.PresenceEvent.state:type_name -> iot.v1.BinaryState
+	0,  // 5: iot.v1.LightEvent.state:type_name -> iot.v1.BinaryState
+	4,  // 6: iot.v1.LightEvent.color:type_name -> iot.v1.ColorXY
 	8,  // 7: iot.v1.SensorEvent.timestamp:type_name -> google.protobuf.Timestamp
 	7,  // 8: iot.v1.ActionRequest.light:type_name -> iot.v1.LightCommand
 	0,  // 9: iot.v1.LightCommand.state:type_name -> iot.v1.BinaryState
@@ -717,8 +730,8 @@ func file_iot_v1_events_proto_init() {
 		(*EventEnvelope_Presence)(nil),
 		(*EventEnvelope_Light)(nil),
 		(*EventEnvelope_Sensor)(nil),
-		(*EventEnvelope_Raw)(nil),
 	}
+	file_iot_v1_events_proto_msgTypes[2].OneofWrappers = []any{}
 	file_iot_v1_events_proto_msgTypes[5].OneofWrappers = []any{
 		(*ActionRequest_Light)(nil),
 	}
