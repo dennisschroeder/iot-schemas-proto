@@ -7,8 +7,8 @@
 package envelope
 
 import (
+	binary_sensor "github.com/dennisschroeder/iot-schemas-proto/proto/v1/binary_sensor"
 	light "github.com/dennisschroeder/iot-schemas-proto/proto/v1/light"
-	presence "github.com/dennisschroeder/iot-schemas-proto/proto/v1/presence"
 	sensor "github.com/dennisschroeder/iot-schemas-proto/proto/v1/sensor"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -34,7 +34,7 @@ type EventEnvelope struct {
 	Timestamp *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	// Types that are valid to be assigned to Payload:
 	//
-	//	*EventEnvelope_Presence
+	//	*EventEnvelope_BinarySensor
 	//	*EventEnvelope_Light
 	//	*EventEnvelope_Sensor
 	Payload       isEventEnvelope_Payload `protobuf_oneof:"payload"`
@@ -107,10 +107,10 @@ func (x *EventEnvelope) GetPayload() isEventEnvelope_Payload {
 	return nil
 }
 
-func (x *EventEnvelope) GetPresence() *presence.PresenceEvent {
+func (x *EventEnvelope) GetBinarySensor() *binary_sensor.BinarySensorEvent {
 	if x != nil {
-		if x, ok := x.Payload.(*EventEnvelope_Presence); ok {
-			return x.Presence
+		if x, ok := x.Payload.(*EventEnvelope_BinarySensor); ok {
+			return x.BinarySensor
 		}
 	}
 	return nil
@@ -138,8 +138,8 @@ type isEventEnvelope_Payload interface {
 	isEventEnvelope_Payload()
 }
 
-type EventEnvelope_Presence struct {
-	Presence *presence.PresenceEvent `protobuf:"bytes,5,opt,name=presence,proto3,oneof"`
+type EventEnvelope_BinarySensor struct {
+	BinarySensor *binary_sensor.BinarySensorEvent `protobuf:"bytes,5,opt,name=binary_sensor,json=binarySensor,proto3,oneof"`
 }
 
 type EventEnvelope_Light struct {
@@ -150,7 +150,7 @@ type EventEnvelope_Sensor struct {
 	Sensor *sensor.SensorEvent `protobuf:"bytes,7,opt,name=sensor,proto3,oneof"`
 }
 
-func (*EventEnvelope_Presence) isEventEnvelope_Payload() {}
+func (*EventEnvelope_BinarySensor) isEventEnvelope_Payload() {}
 
 func (*EventEnvelope_Light) isEventEnvelope_Payload() {}
 
@@ -160,13 +160,13 @@ var File_proto_v1_envelope_envelope_proto protoreflect.FileDescriptor
 
 const file_proto_v1_envelope_envelope_proto_rawDesc = "" +
 	"\n" +
-	" proto/v1/envelope/envelope.proto\x12\x0fiot.v1.envelope\x1a\x1fgoogle/protobuf/timestamp.proto\x1a proto/v1/presence/presence.proto\x1a\x1aproto/v1/light/light.proto\x1a\x1cproto/v1/sensor/sensor.proto\"\xb8\x02\n" +
+	" proto/v1/envelope/envelope.proto\x12\x0fiot.v1.envelope\x1a\x1fgoogle/protobuf/timestamp.proto\x1a*proto/v1/binary_sensor/binary_sensor.proto\x1a\x1aproto/v1/light/light.proto\x1a\x1cproto/v1/sensor/sensor.proto\"\xca\x02\n" +
 	"\rEventEnvelope\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
 	"\x06source\x18\x02 \x01(\tR\x06source\x12\x14\n" +
 	"\x05topic\x18\x03 \x01(\tR\x05topic\x128\n" +
-	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12<\n" +
-	"\bpresence\x18\x05 \x01(\v2\x1e.iot.v1.presence.PresenceEventH\x00R\bpresence\x120\n" +
+	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12N\n" +
+	"\rbinary_sensor\x18\x05 \x01(\v2'.iot.v1.binary_sensor.BinarySensorEventH\x00R\fbinarySensor\x120\n" +
 	"\x05light\x18\x06 \x01(\v2\x18.iot.v1.light.LightEventH\x00R\x05light\x124\n" +
 	"\x06sensor\x18\a \x01(\v2\x1a.iot.v1.sensor.SensorEventH\x00R\x06sensorB\t\n" +
 	"\apayloadB@Z>github.com/dennisschroeder/iot-schemas-proto/proto/v1/envelopeb\x06proto3"
@@ -185,15 +185,15 @@ func file_proto_v1_envelope_envelope_proto_rawDescGZIP() []byte {
 
 var file_proto_v1_envelope_envelope_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_proto_v1_envelope_envelope_proto_goTypes = []any{
-	(*EventEnvelope)(nil),          // 0: iot.v1.envelope.EventEnvelope
-	(*timestamppb.Timestamp)(nil),  // 1: google.protobuf.Timestamp
-	(*presence.PresenceEvent)(nil), // 2: iot.v1.presence.PresenceEvent
-	(*light.LightEvent)(nil),       // 3: iot.v1.light.LightEvent
-	(*sensor.SensorEvent)(nil),     // 4: iot.v1.sensor.SensorEvent
+	(*EventEnvelope)(nil),                   // 0: iot.v1.envelope.EventEnvelope
+	(*timestamppb.Timestamp)(nil),           // 1: google.protobuf.Timestamp
+	(*binary_sensor.BinarySensorEvent)(nil), // 2: iot.v1.binary_sensor.BinarySensorEvent
+	(*light.LightEvent)(nil),                // 3: iot.v1.light.LightEvent
+	(*sensor.SensorEvent)(nil),              // 4: iot.v1.sensor.SensorEvent
 }
 var file_proto_v1_envelope_envelope_proto_depIdxs = []int32{
 	1, // 0: iot.v1.envelope.EventEnvelope.timestamp:type_name -> google.protobuf.Timestamp
-	2, // 1: iot.v1.envelope.EventEnvelope.presence:type_name -> iot.v1.presence.PresenceEvent
+	2, // 1: iot.v1.envelope.EventEnvelope.binary_sensor:type_name -> iot.v1.binary_sensor.BinarySensorEvent
 	3, // 2: iot.v1.envelope.EventEnvelope.light:type_name -> iot.v1.light.LightEvent
 	4, // 3: iot.v1.envelope.EventEnvelope.sensor:type_name -> iot.v1.sensor.SensorEvent
 	4, // [4:4] is the sub-list for method output_type
@@ -209,7 +209,7 @@ func file_proto_v1_envelope_envelope_proto_init() {
 		return
 	}
 	file_proto_v1_envelope_envelope_proto_msgTypes[0].OneofWrappers = []any{
-		(*EventEnvelope_Presence)(nil),
+		(*EventEnvelope_BinarySensor)(nil),
 		(*EventEnvelope_Light)(nil),
 		(*EventEnvelope_Sensor)(nil),
 	}
