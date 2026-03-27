@@ -3,7 +3,7 @@ syntax = "proto3";
 package iot.v1.envelope;
 
 import "google/protobuf/timestamp.proto";
-import "proto/v1/presence/presence.proto";
+import "proto/v1/binary_sensor/binary_sensor.proto";
 import "proto/v1/light/light.proto";
 import "proto/v1/sensor/sensor.proto";
 
@@ -16,7 +16,7 @@ message EventEnvelope {
   string topic = 3;           // Original MQTT Topic
   google.protobuf.Timestamp timestamp = 4;
   oneof payload {
-    iot.v1.presence.PresenceEvent presence = 5;
+    iot.v1.binary_sensor.BinarySensorEvent binary_sensor = 5;
     iot.v1.light.LightEvent light = 6;
     iot.v1.sensor.SensorEvent sensor = 7;
   }
