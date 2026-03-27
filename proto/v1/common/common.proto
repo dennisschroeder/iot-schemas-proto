@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package iot.v1.common;
+
+option go_package = "github.com/dennisschroeder/iot-schemas-proto/proto/v1/common";
+
+// Status Enums (Matter/Google Home Style)
+enum BinaryState {
+  BINARY_STATE_UNSPECIFIED = 0;
+  BINARY_STATE_OFF = 1;
+  BINARY_STATE_ON = 2;
+}
+
+message ColorXY {
+  float x = 1;
+  float y = 2;
+}

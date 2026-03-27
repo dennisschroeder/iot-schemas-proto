@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package iot.v1.sensor;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/dennisschroeder/iot-schemas-proto/proto/v1/sensor";
+
+// Generic Sensor Event (Legacy/Fallback)
+message SensorEvent {
+  string id = 1;
+  string source = 2;
+  string entity_id = 3;
+  string value = 4;
+  double numeric_value = 5;
+  string unit = 6;
+  google.protobuf.Timestamp timestamp = 7;
+}
