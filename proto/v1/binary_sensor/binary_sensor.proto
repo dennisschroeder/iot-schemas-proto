@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package iot.v1.binary_sensor;
+
+import "proto/v1/common/common.proto";
+
+option go_package = "github.com/dennisschroeder/iot-schemas-proto/proto/v1/binary_sensor";
+
+// Domain: Binary Sensor (Motion, Presence, Door, Window, Smoke)
+message BinarySensorEvent {
+  string entity_id = 1;
+  iot.v1.common.BinaryState state = 2;
+  string device_class = 3; // e.g., "motion", "presence", "door", "window"
+}
