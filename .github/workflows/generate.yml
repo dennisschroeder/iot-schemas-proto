@@ -31,15 +31,14 @@ jobs:
 
       - name: Generate Code
         run: |
-          mkdir -p gen/go
-          protoc --go_out=gen/go --go_opt=paths=source_relative \
-                 --proto_path=proto \
-                 proto/iot/v1/*.proto
+          protoc --go_out=. --go_opt=paths=source_relative \
+                 --proto_path=. \
+                 proto/v1/*/*.proto
 
       - name: Commit and Push Generated Code
         run: |
           git config --global user.name "IoT Engineer Agent"
           git config --global user.email "iot@dennisschroeder.me"
-          git add gen/go
+          git add proto/v1/**/*.pb.go
           git commit -m "chore: auto-generate Go code from protobuf" || exit 0
           git push
