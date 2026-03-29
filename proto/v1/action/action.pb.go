@@ -8,6 +8,7 @@ package action
 
 import (
 	light "github.com/dennisschroeder/iot-schemas-proto/proto/v1/light"
+	scene "github.com/dennisschroeder/iot-schemas-proto/proto/v1/scene"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -30,6 +31,7 @@ type ActionRequest struct {
 	// Types that are valid to be assigned to Command:
 	//
 	//	*ActionRequest_Light
+	//	*ActionRequest_Scene
 	Command       isActionRequest_Command `protobuf_oneof:"command"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -95,6 +97,15 @@ func (x *ActionRequest) GetLight() *light.LightCommand {
 	return nil
 }
 
+func (x *ActionRequest) GetScene() *scene.SceneCommand {
+	if x != nil {
+		if x, ok := x.Command.(*ActionRequest_Scene); ok {
+			return x.Scene
+		}
+	}
+	return nil
+}
+
 type isActionRequest_Command interface {
 	isActionRequest_Command()
 }
@@ -103,17 +114,24 @@ type ActionRequest_Light struct {
 	Light *light.LightCommand `protobuf:"bytes,3,opt,name=light,proto3,oneof"`
 }
 
+type ActionRequest_Scene struct {
+	Scene *scene.SceneCommand `protobuf:"bytes,4,opt,name=scene,proto3,oneof"`
+}
+
 func (*ActionRequest_Light) isActionRequest_Command() {}
+
+func (*ActionRequest_Scene) isActionRequest_Command() {}
 
 var File_proto_v1_action_action_proto protoreflect.FileDescriptor
 
 const file_proto_v1_action_action_proto_rawDesc = "" +
 	"\n" +
-	"\x1cproto/v1/action/action.proto\x12\riot.v1.action\x1a\x1aproto/v1/light/light.proto\"\x83\x01\n" +
+	"\x1cproto/v1/action/action.proto\x12\riot.v1.action\x1a\x1aproto/v1/light/light.proto\x1a\x1aproto/v1/scene/scene.proto\"\xb7\x01\n" +
 	"\rActionRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12#\n" +
 	"\rtarget_entity\x18\x02 \x01(\tR\ftargetEntity\x122\n" +
-	"\x05light\x18\x03 \x01(\v2\x1a.iot.v1.light.LightCommandH\x00R\x05lightB\t\n" +
+	"\x05light\x18\x03 \x01(\v2\x1a.iot.v1.light.LightCommandH\x00R\x05light\x122\n" +
+	"\x05scene\x18\x04 \x01(\v2\x1a.iot.v1.scene.SceneCommandH\x00R\x05sceneB\t\n" +
 	"\acommandB>Z<github.com/dennisschroeder/iot-schemas-proto/proto/v1/actionb\x06proto3"
 
 var (
@@ -132,14 +150,16 @@ var file_proto_v1_action_action_proto_msgTypes = make([]protoimpl.MessageInfo, 1
 var file_proto_v1_action_action_proto_goTypes = []any{
 	(*ActionRequest)(nil),      // 0: iot.v1.action.ActionRequest
 	(*light.LightCommand)(nil), // 1: iot.v1.light.LightCommand
+	(*scene.SceneCommand)(nil), // 2: iot.v1.scene.SceneCommand
 }
 var file_proto_v1_action_action_proto_depIdxs = []int32{
 	1, // 0: iot.v1.action.ActionRequest.light:type_name -> iot.v1.light.LightCommand
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2, // 1: iot.v1.action.ActionRequest.scene:type_name -> iot.v1.scene.SceneCommand
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_proto_v1_action_action_proto_init() }
@@ -149,6 +169,7 @@ func file_proto_v1_action_action_proto_init() {
 	}
 	file_proto_v1_action_action_proto_msgTypes[0].OneofWrappers = []any{
 		(*ActionRequest_Light)(nil),
+		(*ActionRequest_Scene)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
