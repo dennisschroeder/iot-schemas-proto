@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package iot.v1.scene;
+
+option go_package = "github.com/dennisschroeder/iot-schemas-proto/proto/v1/scene";
+
+message SceneCommand {
+  string scene_id = 1;
+}
