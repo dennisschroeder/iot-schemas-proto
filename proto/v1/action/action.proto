@@ -4,6 +4,7 @@ package iot.v1.action;
 
 import "proto/v1/light/light.proto";
 import "proto/v1/scene/scene.proto";
+import "proto/v1/notification/notification.proto";
 
 option go_package = "github.com/dennisschroeder/iot-schemas-proto/proto/v1/action";
 
@@ -14,5 +15,6 @@ message ActionRequest {
   oneof command {
     iot.v1.light.LightCommand light = 3;
     iot.v1.scene.SceneCommand scene = 4;
+    iot.v1.notification.NotificationCommand notification = 5;
   }
 }
