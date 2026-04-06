@@ -7,6 +7,7 @@
 package action
 
 import (
+	cover "github.com/dennisschroeder/iot-schemas-proto/proto/v1/cover"
 	light "github.com/dennisschroeder/iot-schemas-proto/proto/v1/light"
 	notification "github.com/dennisschroeder/iot-schemas-proto/proto/v1/notification"
 	scene "github.com/dennisschroeder/iot-schemas-proto/proto/v1/scene"
@@ -34,6 +35,7 @@ type ActionRequest struct {
 	//	*ActionRequest_Light
 	//	*ActionRequest_Scene
 	//	*ActionRequest_Notification
+	//	*ActionRequest_Cover
 	Command       isActionRequest_Command `protobuf_oneof:"command"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -117,6 +119,15 @@ func (x *ActionRequest) GetNotification() *notification.NotificationCommand {
 	return nil
 }
 
+func (x *ActionRequest) GetCover() *cover.CoverCommand {
+	if x != nil {
+		if x, ok := x.Command.(*ActionRequest_Cover); ok {
+			return x.Cover
+		}
+	}
+	return nil
+}
+
 type isActionRequest_Command interface {
 	isActionRequest_Command()
 }
@@ -133,23 +144,30 @@ type ActionRequest_Notification struct {
 	Notification *notification.NotificationCommand `protobuf:"bytes,5,opt,name=notification,proto3,oneof"`
 }
 
+type ActionRequest_Cover struct {
+	Cover *cover.CoverCommand `protobuf:"bytes,6,opt,name=cover,proto3,oneof"`
+}
+
 func (*ActionRequest_Light) isActionRequest_Command() {}
 
 func (*ActionRequest_Scene) isActionRequest_Command() {}
 
 func (*ActionRequest_Notification) isActionRequest_Command() {}
 
+func (*ActionRequest_Cover) isActionRequest_Command() {}
+
 var File_proto_v1_action_action_proto protoreflect.FileDescriptor
 
 const file_proto_v1_action_action_proto_rawDesc = "" +
 	"\n" +
-	"\x1cproto/v1/action/action.proto\x12\riot.v1.action\x1a\x1aproto/v1/light/light.proto\x1a\x1aproto/v1/scene/scene.proto\x1a(proto/v1/notification/notification.proto\"\x87\x02\n" +
+	"\x1cproto/v1/action/action.proto\x12\riot.v1.action\x1a\x1aproto/v1/light/light.proto\x1a\x1aproto/v1/scene/scene.proto\x1a(proto/v1/notification/notification.proto\x1a\x1aproto/v1/cover/cover.proto\"\xbb\x02\n" +
 	"\rActionRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12#\n" +
 	"\rtarget_entity\x18\x02 \x01(\tR\ftargetEntity\x122\n" +
 	"\x05light\x18\x03 \x01(\v2\x1a.iot.v1.light.LightCommandH\x00R\x05light\x122\n" +
 	"\x05scene\x18\x04 \x01(\v2\x1a.iot.v1.scene.SceneCommandH\x00R\x05scene\x12N\n" +
-	"\fnotification\x18\x05 \x01(\v2(.iot.v1.notification.NotificationCommandH\x00R\fnotificationB\t\n" +
+	"\fnotification\x18\x05 \x01(\v2(.iot.v1.notification.NotificationCommandH\x00R\fnotification\x122\n" +
+	"\x05cover\x18\x06 \x01(\v2\x1a.iot.v1.cover.CoverCommandH\x00R\x05coverB\t\n" +
 	"\acommandB>Z<github.com/dennisschroeder/iot-schemas-proto/proto/v1/actionb\x06proto3"
 
 var (
@@ -170,16 +188,18 @@ var file_proto_v1_action_action_proto_goTypes = []any{
 	(*light.LightCommand)(nil),               // 1: iot.v1.light.LightCommand
 	(*scene.SceneCommand)(nil),               // 2: iot.v1.scene.SceneCommand
 	(*notification.NotificationCommand)(nil), // 3: iot.v1.notification.NotificationCommand
+	(*cover.CoverCommand)(nil),               // 4: iot.v1.cover.CoverCommand
 }
 var file_proto_v1_action_action_proto_depIdxs = []int32{
 	1, // 0: iot.v1.action.ActionRequest.light:type_name -> iot.v1.light.LightCommand
 	2, // 1: iot.v1.action.ActionRequest.scene:type_name -> iot.v1.scene.SceneCommand
 	3, // 2: iot.v1.action.ActionRequest.notification:type_name -> iot.v1.notification.NotificationCommand
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	4, // 3: iot.v1.action.ActionRequest.cover:type_name -> iot.v1.cover.CoverCommand
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_proto_v1_action_action_proto_init() }
@@ -191,6 +211,7 @@ func file_proto_v1_action_action_proto_init() {
 		(*ActionRequest_Light)(nil),
 		(*ActionRequest_Scene)(nil),
 		(*ActionRequest_Notification)(nil),
+		(*ActionRequest_Cover)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

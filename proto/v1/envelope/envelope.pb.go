@@ -8,6 +8,7 @@ package envelope
 
 import (
 	binary_sensor "github.com/dennisschroeder/iot-schemas-proto/proto/v1/binary_sensor"
+	cover "github.com/dennisschroeder/iot-schemas-proto/proto/v1/cover"
 	light "github.com/dennisschroeder/iot-schemas-proto/proto/v1/light"
 	sensor "github.com/dennisschroeder/iot-schemas-proto/proto/v1/sensor"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -37,6 +38,7 @@ type EventEnvelope struct {
 	//	*EventEnvelope_BinarySensor
 	//	*EventEnvelope_Light
 	//	*EventEnvelope_Sensor
+	//	*EventEnvelope_Cover
 	Payload       isEventEnvelope_Payload `protobuf_oneof:"payload"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -134,6 +136,15 @@ func (x *EventEnvelope) GetSensor() *sensor.SensorEvent {
 	return nil
 }
 
+func (x *EventEnvelope) GetCover() *cover.CoverEvent {
+	if x != nil {
+		if x, ok := x.Payload.(*EventEnvelope_Cover); ok {
+			return x.Cover
+		}
+	}
+	return nil
+}
+
 type isEventEnvelope_Payload interface {
 	isEventEnvelope_Payload()
 }
@@ -150,17 +161,23 @@ type EventEnvelope_Sensor struct {
 	Sensor *sensor.SensorEvent `protobuf:"bytes,7,opt,name=sensor,proto3,oneof"`
 }
 
+type EventEnvelope_Cover struct {
+	Cover *cover.CoverEvent `protobuf:"bytes,8,opt,name=cover,proto3,oneof"`
+}
+
 func (*EventEnvelope_BinarySensor) isEventEnvelope_Payload() {}
 
 func (*EventEnvelope_Light) isEventEnvelope_Payload() {}
 
 func (*EventEnvelope_Sensor) isEventEnvelope_Payload() {}
 
+func (*EventEnvelope_Cover) isEventEnvelope_Payload() {}
+
 var File_proto_v1_envelope_envelope_proto protoreflect.FileDescriptor
 
 const file_proto_v1_envelope_envelope_proto_rawDesc = "" +
 	"\n" +
-	" proto/v1/envelope/envelope.proto\x12\x0fiot.v1.envelope\x1a\x1fgoogle/protobuf/timestamp.proto\x1a*proto/v1/binary_sensor/binary_sensor.proto\x1a\x1aproto/v1/light/light.proto\x1a\x1cproto/v1/sensor/sensor.proto\"\xca\x02\n" +
+	" proto/v1/envelope/envelope.proto\x12\x0fiot.v1.envelope\x1a\x1fgoogle/protobuf/timestamp.proto\x1a*proto/v1/binary_sensor/binary_sensor.proto\x1a\x1aproto/v1/light/light.proto\x1a\x1cproto/v1/sensor/sensor.proto\x1a\x1aproto/v1/cover/cover.proto\"\xfc\x02\n" +
 	"\rEventEnvelope\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
 	"\x06source\x18\x02 \x01(\tR\x06source\x12\x14\n" +
@@ -168,7 +185,8 @@ const file_proto_v1_envelope_envelope_proto_rawDesc = "" +
 	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12N\n" +
 	"\rbinary_sensor\x18\x05 \x01(\v2'.iot.v1.binary_sensor.BinarySensorEventH\x00R\fbinarySensor\x120\n" +
 	"\x05light\x18\x06 \x01(\v2\x18.iot.v1.light.LightEventH\x00R\x05light\x124\n" +
-	"\x06sensor\x18\a \x01(\v2\x1a.iot.v1.sensor.SensorEventH\x00R\x06sensorB\t\n" +
+	"\x06sensor\x18\a \x01(\v2\x1a.iot.v1.sensor.SensorEventH\x00R\x06sensor\x120\n" +
+	"\x05cover\x18\b \x01(\v2\x18.iot.v1.cover.CoverEventH\x00R\x05coverB\t\n" +
 	"\apayloadB@Z>github.com/dennisschroeder/iot-schemas-proto/proto/v1/envelopeb\x06proto3"
 
 var (
@@ -190,17 +208,19 @@ var file_proto_v1_envelope_envelope_proto_goTypes = []any{
 	(*binary_sensor.BinarySensorEvent)(nil), // 2: iot.v1.binary_sensor.BinarySensorEvent
 	(*light.LightEvent)(nil),                // 3: iot.v1.light.LightEvent
 	(*sensor.SensorEvent)(nil),              // 4: iot.v1.sensor.SensorEvent
+	(*cover.CoverEvent)(nil),                // 5: iot.v1.cover.CoverEvent
 }
 var file_proto_v1_envelope_envelope_proto_depIdxs = []int32{
 	1, // 0: iot.v1.envelope.EventEnvelope.timestamp:type_name -> google.protobuf.Timestamp
 	2, // 1: iot.v1.envelope.EventEnvelope.binary_sensor:type_name -> iot.v1.binary_sensor.BinarySensorEvent
 	3, // 2: iot.v1.envelope.EventEnvelope.light:type_name -> iot.v1.light.LightEvent
 	4, // 3: iot.v1.envelope.EventEnvelope.sensor:type_name -> iot.v1.sensor.SensorEvent
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	5, // 4: iot.v1.envelope.EventEnvelope.cover:type_name -> iot.v1.cover.CoverEvent
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_proto_v1_envelope_envelope_proto_init() }
@@ -212,6 +232,7 @@ func file_proto_v1_envelope_envelope_proto_init() {
 		(*EventEnvelope_BinarySensor)(nil),
 		(*EventEnvelope_Light)(nil),
 		(*EventEnvelope_Sensor)(nil),
+		(*EventEnvelope_Cover)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
