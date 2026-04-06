@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package iot.v1.cover;
+
+import "proto/v1/common/common.proto";
+
+option go_package = "github.com/dennisschroeder/iot-schemas-proto/proto/v1/cover";
+
+// Domain: Cover (Rollläden, Jalousien, Markisen)
+message CoverEvent {
+  string entity_id = 1;
+  string state = 2; // "open", "closed", "opening", "closing"
+  optional int32 position = 3; // 0-100%
+}
+
+message CoverCommand {
+  string state = 1; // "OPEN", "CLOSE", "STOP"
+  optional int32 position = 2; // 0-100%
+}

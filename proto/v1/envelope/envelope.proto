@@ -6,6 +6,7 @@ import "google/protobuf/timestamp.proto";
 import "proto/v1/binary_sensor/binary_sensor.proto";
 import "proto/v1/light/light.proto";
 import "proto/v1/sensor/sensor.proto";
+import "proto/v1/cover/cover.proto";
 
 option go_package = "github.com/dennisschroeder/iot-schemas-proto/proto/v1/envelope";
 
@@ -19,5 +20,6 @@ message EventEnvelope {
     iot.v1.binary_sensor.BinarySensorEvent binary_sensor = 5;
     iot.v1.light.LightEvent light = 6;
     iot.v1.sensor.SensorEvent sensor = 7;
+    iot.v1.cover.CoverEvent cover = 8;
   }
 }
